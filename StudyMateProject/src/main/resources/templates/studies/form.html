@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${mode == 'edit'} ? '스터디 수정' : '스터디 만들기'">스터디 만들기</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h1 th:text="${mode == 'edit'} ? '스터디 수정' : '스터디 만들기'"></h1>
+
+<form method="post"
+      th:action="${mode == 'edit'} ? @{/studies/{id}/edit(id=${studyId})} : @{/studies/new}"
+      th:object="${form}">
+
+    <div>
+        <label for="title">스터디 제목 *</label><br>
+        <input type="text" id="title" th:field="*{title}" maxlength="100" size="50" required>
+    </div>
+    <br>
+
+    <div>
+        <label for="description">스터디 설명 *</label><br>
+        <textarea id="description" th:field="*{description}" rows="8" cols="60"
+                  maxlength="1000" required></textarea>
+    </div>
+    <br>
+
+    <div>
+        <label for="maxMembers">모집 인원 * (2 ~ 50명)</label><br>
+        <input type="number" id="maxMembers" th:field="*{maxMembers}" min="2" max="50" required>
+    </div>
+    <br>
+
+    <button type="submit" th:text="${mode == 'edit'} ? '수정하기' : '생성하기'">생성하기</button>
+    <a th:href="${mode == 'edit'} ? @{/studies/{id}(id=${studyId})} : @{/studies}">취소</a>
+</form>
+
+</body>
+</html>
