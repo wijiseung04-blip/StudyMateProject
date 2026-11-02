@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title th:text="${study.title}">스터디 상세</title>
+</head>
+<body>
+
+<div th:replace="~{fragments/header :: header}"></div>
+
+<h1 th:text="${study.title}"></h1>
+
+<p>
+    개설자: <span th:text="${study.leader.name}"></span>
+    | 모집 인원: <span th:text="${study.maxMembers} + '명'"></span>
+</p>
+<p>
+    생성일: <span th:text="${#temporals.format(study.createdAt, 'yyyy-MM-dd HH:mm')}"></span>
+    | 수정일: <span th:text="${#temporals.format(study.updatedAt, 'yyyy-MM-dd HH:mm')}"></span>
+</p>
+
+<h3>스터디 설명</h3>
+<p style="white-space:pre-wrap" th:text="${study.description}"></p>
+
+<div th:if="${isLeader}">
+    <a th:href="@{/studies/{id}/edit(id=${study.id})}">수정</a>
+    <form th:action="@{/studies/{id}/delete(id=${study.id})}" method="post" style="display:inline"
+          onsubmit="return confirm('정말 이 스터디를 삭제하시겠습니까?');">
+        <button type="submit">삭제</button>
+    </form>
+</div>
+
+<p><a href="/studies">목록으로</a></p>
+
+</body>
+</html>

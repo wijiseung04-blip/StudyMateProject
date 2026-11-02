@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="ko" xmlns:th="http://www.thymeleaf.org">
+<body>
+<div th:fragment="header" style="margin-bottom:16px">
+    <a href="/studies"><strong>StudyMate</strong></a>
+    |
+    <th:block th:if="${loginUserName}">
+        <span th:text="${loginUserName} + '님'"></span>
+        <form action="/logout" method="post" style="display:inline">
+            <button type="submit">로그아웃</button>
+        </form>
+    </th:block>
+    <th:block th:unless="${loginUserName}">
+        <a href="/login">로그인</a>
+        <a href="/signup">회원가입</a>
+    </th:block>
+    <hr>
+    <p style="color:green" th:if="${message}" th:text="${message}"></p>
+    <p style="color:red" th:if="${error}" th:text="${error}"></p>
+</div>
+</body>
+</html>

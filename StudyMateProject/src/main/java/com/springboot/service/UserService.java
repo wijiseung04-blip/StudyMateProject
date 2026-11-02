@@ -54,4 +54,22 @@ public class UserService {
         // DB 저장
         return userRepository.save(user);
     }
+
+    // 로그인
+    public User login(String username, String password) {
+
+        if (username == null || username.isBlank()
+                || password == null || password.isBlank()) {
+            throw new IllegalArgumentException("아이디와 비밀번호를 입력해주세요.");
+        }
+
+        User user = userRepository.findByUsername(username)
+                .orElseThrow(() -> new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다."));
+
+        if (!user.getPassword().equals(password)) {
+            throw new IllegalArgumentException("아이디 또는 비밀번호가 올바르지 않습니다.");
+        }
+
+        return user;
+    }
 }
