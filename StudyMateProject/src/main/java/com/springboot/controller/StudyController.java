@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import com.springboot.dto.StudySearchCondition;
 
 @Controller
 @RequestMapping("/studies")
@@ -140,5 +141,11 @@ public class StudyController {
             redirectAttributes.addFlashAttribute("error", e.getMessage());
         }
         return "redirect:/studies";
+    }
+
+    @GetMapping
+    public String list(@ModelAttribute("cond") StudySearchCondition cond, Model model) {
+        model.addAttribute("studies", studyService.search(cond));
+        return "studies/list";
     }
 }

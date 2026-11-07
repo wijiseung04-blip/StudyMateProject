@@ -7,6 +7,7 @@ import com.springboot.repository.StudyRepository;
 import com.springboot.repository.UserRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import com.springboot.dto.StudySearchCondition;
 
 import java.util.List;
 
@@ -116,5 +117,14 @@ public class StudyService {
             throw new IllegalArgumentException(
                     "모집 인원은 " + MIN_MEMBERS + "명 이상 " + MAX_MEMBERS + "명 이하로 설정해주세요.");
         }
+    }
+    
+    public List<Study> search(StudySearchCondition cond) {
+        return studyRepository.search(
+                cond.getKeyword(),
+                cond.getType(),
+                cond.getMinMembers(),
+                cond.getMaxMembers()
+        );
     }
 }
