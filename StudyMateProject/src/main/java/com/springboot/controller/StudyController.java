@@ -21,13 +21,6 @@ public class StudyController {
         this.studyService = studyService;
     }
 
-    // 스터디 목록
-    @GetMapping
-    public String list(Model model) {
-        model.addAttribute("studies", studyService.findAll());
-        return "studies/list";
-    }
-
     // 스터디 상세
     @GetMapping("/{id}")
     public String detail(@PathVariable("id") Long id,
